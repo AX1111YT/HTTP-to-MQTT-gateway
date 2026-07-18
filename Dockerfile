@@ -11,6 +11,8 @@ RUN python -m ensurepip --upgrade && \
 
 COPY --chown=appuser:appuser src/ ./src/
 COPY --chown=appuser:appuser scripts/ ./scripts/
+COPY --chown=appuser:appuser migrations/ ./migrations/
+COPY --chown=appuser:appuser alembic.ini ./
 RUN chmod +x scripts/entrypoint.sh
 
 RUN mkdir -p /app/db && chown appuser:appuser /app/db
