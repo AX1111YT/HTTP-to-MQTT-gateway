@@ -35,6 +35,7 @@ services:
       - .env
     volumes:
       - ./api/db:/app/db
+      - gateway-logs:/logs
     depends_on:
       - mosquitto
     networks:
@@ -60,6 +61,7 @@ volumes:
   caddy-config:
   dynamic-security:
   mosquitto-data:
+  gateway-logs:
 
 networks:
   gateway-net:

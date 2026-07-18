@@ -15,7 +15,7 @@ COPY --chown=appuser:appuser migrations/ ./migrations/
 COPY --chown=appuser:appuser alembic.ini ./
 RUN chmod +x scripts/entrypoint.sh
 
-RUN mkdir -p /app/db && chown appuser:appuser /app/db
+RUN mkdir -p /app/db /logs && chown appuser:appuser /app/db /logs
 
 ENV PYTHONPATH="/app/src"
 
