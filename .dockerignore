@@ -19,5 +19,3 @@ deploy/
 README.md
 PLAN.md
 AGENTS.md
-alembic.ini
-migrations/
