@@ -1,0 +1,66 @@
+services:
+  caddy:
+    image: caddy:2.11.4
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - gateway-net
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.22
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "8883:8883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - dynamic-security:/mosquitto/config/dynamic-security
+      - mosquitto-data:/mosquitto/data
+      - caddy-data:/mosquitto/certs:ro
+    networks:
+      - gateway-net
+
+  api:
+    image: ghcr.io/ax1111yt/http-to-mqtt-gateway:${IMAGE_TAG:-latest}
+    container_name: gateway-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./api/db:/app/db
+    depends_on:
+      - mosquitto
+    networks:
+      - gateway-net
+
+  # Remove this service if BACKUP_ENABLED=False
+  backup:
+    image: ghcr.io/ax1111yt/http-to-mqtt-gateway:${IMAGE_TAG:-latest}
+    container_name: gateway-backup
+    restart: unless-stopped
+    entrypoint: ["/app/.venv/bin/python", "-m", "supercronic", "/app/crontab"]
+    env_file:
+      - .env
+    volumes:
+      - ./api/db:/app/db:ro
+    depends_on:
+      - api
+    networks:
+      - gateway-net
+
+volumes:
+  caddy-data:
+  caddy-config:
+  dynamic-security:
+  mosquitto-data:
+
+networks:
+  gateway-net:
+    driver: bridge

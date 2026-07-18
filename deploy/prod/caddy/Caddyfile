@@ -1,0 +1,8 @@
+api.yourdomain.com {
+	reverse_proxy api:8000
+}
+
+mqtt.yourdomain.com {
+	# Caddy auto-provisions a Let's Encrypt cert for this domain.
+	# No routes needed — we only use Caddy as a cert source for Mosquitto.
+}

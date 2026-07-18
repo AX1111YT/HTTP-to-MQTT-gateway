@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gateway"]
+
+[project]
+name = "http-to-mqtt-translator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "aiomqtt>=2.5.1",
+    "aiosqlite>=0.22.1",
+    "alembic>=1.18.5",
+    "argon2-cffi>=25.1.0",
+    "b2sdk>=2.12.0",
+    "cryptography>=49.0.0",
+    "fastapi>=0.139.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "slowapi>=0.1.10",
+    "sqlalchemy[asyncio]>=2.0.51",
+    "uvicorn[standard]>=0.51.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "respx>=0.23.1",
+    "ruff>=0.15.21",
+    "time-machine>=3.2.0",
+]
