@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-python scripts/bootstrap_admin.py
-
-exec "$@"
+chown -R appuser:appuser /app/db
+runuser -u appuser -- python scripts/bootstrap_admin.py
+exec runuser -u appuser -- "$@"

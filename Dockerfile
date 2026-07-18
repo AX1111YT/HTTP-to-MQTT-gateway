@@ -13,9 +13,9 @@ COPY --chown=appuser:appuser src/ ./src/
 COPY --chown=appuser:appuser scripts/ ./scripts/
 RUN chmod +x scripts/entrypoint.sh
 
-ENV PYTHONPATH="/app/src"
+RUN mkdir -p /app/db && chown appuser:appuser /app/db
 
-USER appuser
+ENV PYTHONPATH="/app/src"
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD ["python", "-c", "import httpx; httpx.get('http://localhost:8000/api/v1/health').raise_for_status()"]
