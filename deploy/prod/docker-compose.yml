@@ -27,7 +27,7 @@ services:
       - ./mosquitto/entrypoint.sh:/mosquitto/entrypoint.sh:ro
       - dynamic-security:/mosquitto/config/dynamic-security
       - mosquitto-data:/mosquitto/data
-      - caddy-data:/mosquitto/certs:ro
+      - caddy-data:/mosquitto/certs
     networks:
       - gateway-net
 
