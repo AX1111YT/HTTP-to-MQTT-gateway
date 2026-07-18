@@ -17,10 +17,14 @@ services:
     image: eclipse-mosquitto:2.0.22
     container_name: mosquitto
     restart: unless-stopped
+    entrypoint: ["/mosquitto/entrypoint.sh"]
+    env_file:
+      - .env
     ports:
       - "8883:8883"
     volumes:
-      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf.template:ro
+      - ./mosquitto/entrypoint.sh:/mosquitto/entrypoint.sh:ro
       - dynamic-security:/mosquitto/config/dynamic-security
       - mosquitto-data:/mosquitto/data
       - caddy-data:/mosquitto/certs:ro

@@ -45,9 +45,8 @@ cd http-to-mqtt-gateway/deploy/prod
 cp .env.example .env
 nano .env
 
-# 2. Replace yourdomain.com with your actual domains
+# 2. Replace yourdomain.com with your actual MQTT domain in the Caddyfile
 nano caddy/Caddyfile
-nano mosquitto/mosquitto.conf
 
 # 3. Start everything
 docker compose up -d
@@ -56,8 +55,8 @@ docker compose up -d
 On first start:
 
 - Caddy auto-provisions TLS certificates from Let's Encrypt for both domains
+- Mosquitto auto-initializes its dynamic-security config (using `MQTT_ADMIN_PASSWORD` from `.env`)
 - The API container prints admin API key (check `sudo docker compose logs api`)
-- Mosquitto picks up its TLS cert from the Caddy volume automatically
 
 > [!NOTE]
 > If `BACKUP_ENABLED=False`, remove the `backup` service from `docker-compose.yml`.
@@ -72,6 +71,7 @@ On first start:
 | `GRAFANA_LOGGING_ENABLED` | No              | `False`                               | Ship audit logs to Grafana Loki                     |
 | `MQTT_BROKER_HOST`        | Yes             |                                       | MQTT broker hostname                                |
 | `MQTT_BROKER_PORT`        | No              | `8883`                                | MQTT broker TLS port                                |
+| `MQTT_DOMAIN`             | Yes             |                                       | MQTT broker domain (used for TLS cert paths)        |
 | `MQTT_CA_CERTS`           | No              | `""`                                  | Path to CA certificate for MQTT TLS                 |
 | `MQTT_ADMIN_USERNAME`     | Yes             |                                       | Mosquitto dynamic-security admin username           |
 | `MQTT_ADMIN_PASSWORD`     | Yes             |                                       | Mosquitto dynamic-security admin password           |
