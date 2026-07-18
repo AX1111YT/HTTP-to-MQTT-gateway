@@ -1,0 +1,67 @@
+name: Feature Request
+description: Suggest a new idea, optimization, or improvement for the gateway
+title: "[FEAT]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Thank you for helping improve the HTTP to MQTT Gateway! ❤️
+        Please fill out the form below to suggest your enhancement.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: Provide a clear and concise description of what the issue or limitation is.
+      placeholder: "e.g., I'm frustrated when the gateway doesn't retry connecting to the MQTT broker if the network drops temporarily..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: Explain the proposed behavior and how you envision it working.
+      placeholder: "e.g., The gateway should implement an exponential backoff retry mechanism when the MQTT broker is unreachable."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: Have you tried any alternative solutions or workarounds?
+      placeholder: "e.g., Right now I'm using an external cron job script to restart the Docker container if it fails."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Project Scope
+      description: Which side of the gateway does this change primarily affect?
+      options:
+        - "Incoming HTTP Side"
+        - "Outgoing MQTT Side"
+        - "Internal Logic / Configuration / Docker"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Why would this be useful to the majority of users?
+      description: Explain the value this brings to the broader community.
+      placeholder: "e.g., Network instability is common in smart home environments, so auto-reconnect keeps the gateway stable for everyone."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context, code examples, logs, or screenshots related to your request here.
+    validations:
+      required: false

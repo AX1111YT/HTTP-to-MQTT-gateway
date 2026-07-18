@@ -4,5 +4,4 @@ api.yourdomain.com {
 
 mqtt.yourdomain.com {
 	# Caddy auto-provisions a Let's Encrypt cert for this domain.
-	# No routes needed — we only use Caddy as a cert source for Mosquitto.
 }
