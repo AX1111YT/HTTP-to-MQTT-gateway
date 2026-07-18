@@ -5,7 +5,9 @@ WORKDIR /app
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt && \
+RUN python -m ensurepip --upgrade && \
+    python -m pip install --no-cache-dir -r requirements.txt && \
+    python -m pip uninstall -y pip setuptools
 
 COPY --chown=appuser:appuser src/ ./src/
 COPY --chown=appuser:appuser scripts/ ./scripts/
