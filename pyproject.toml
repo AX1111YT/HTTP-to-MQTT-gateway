@@ -6,9 +6,9 @@ build-backend = "hatchling.build"
 packages = ["src/gateway"]
 
 [project]
-name = "http-to-mqtt-translator"
+name = "http-to-mqtt-gateway"
 version = "0.1.0"
-description = "Add your description here"
+description = ""
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
