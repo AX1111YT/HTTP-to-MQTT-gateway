@@ -28,6 +28,8 @@ services:
       - dynamic-security:/mosquitto/config/dynamic-security
       - mosquitto-data:/mosquitto/data
       - caddy-data:/mosquitto/certs
+    depends_on:
+      - caddy
     networks:
       - gateway-net
 
