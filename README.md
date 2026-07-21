@@ -4,8 +4,10 @@ Multi-tenant HTTP-to-MQTT gateway for ESPHome devices. Users hit a FastAPI REST 
 
 ## Prerequisites
 
+(API only)
 - Python 3.14
 - [uv](https://docs.astral.sh/uv/) package manager
+(Docker Deployment)
 - Docker + Compose v2
 
 ## Quick Start (API only)
