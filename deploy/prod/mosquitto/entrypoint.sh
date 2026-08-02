@@ -10,8 +10,14 @@ if [ -z "$MQTT_DOMAIN" ]; then
     exit 1
 fi
 
-# Make certs readable by mosquitto (UID 1883)
+# Make certs readable by mosquitto
 CERT_DIR="/mosquitto/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/$MQTT_DOMAIN"
+
+chmod 755 \
+    "/mosquitto/certs/caddy/certificates" \
+    "/mosquitto/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory" \
+    "$CERT_DIR"
+
 chmod 644 "$CERT_DIR/$MQTT_DOMAIN.crt"
 chmod 640 "$CERT_DIR/$MQTT_DOMAIN.key"
 chown 1883:1883 "$CERT_DIR/$MQTT_DOMAIN.crt" "$CERT_DIR/$MQTT_DOMAIN.key"
