@@ -44,7 +44,7 @@ git clone https://github.com/AX1111YT/http-to-mqtt-gateway.git
 # Change directory
 cd http-to-mqtt-gateway/deploy/prod
 
-# Mkatee the script executable
+# Make the script executable
 chmod +x mosquitto/entrypoint.sh
 
 # 1. Fill in your environment
