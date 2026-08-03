@@ -49,7 +49,7 @@ chmod +x mosquitto/entrypoint.sh
 
 # 1. Fill in your environment
 cp .env.example .env
-nano .env
+nano .env  # (Fill the environmental variables)
 
 # 2. Replace yourdomain.com with your actual MQTT domain in the Caddyfile
 nano caddy/Caddyfile
