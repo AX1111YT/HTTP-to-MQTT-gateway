@@ -3,7 +3,7 @@ aiosqlite==0.22.1
 alembic==1.18.5
 argon2-cffi==25.1.0
 b2sdk==2.12.0
-cryptography==49.0.0
+cryptography==50.0.0
 fastapi==0.139.0
 httpx==0.28.1
 pydantic==2.13.4
