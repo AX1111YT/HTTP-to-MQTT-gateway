@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -69,6 +71,12 @@ class Settings(BaseSettings):
                 )
         return self
 
+    @model_validator(mode="after")
+    def _validate_mqtt_ca_certs(self) -> Settings:
+        if self.MQTT_CA_CERTS and not os.path.isfile(self.MQTT_CA_CERTS):
+            raise ValueError(f"MQTT_CA_CERTS file not found: {self.MQTT_CA_CERTS}")
+        return self
+
 
 # pydantic-settings reads env vars at runtime; mypy can't see the kwargs
-settings = Settings()  # type: ignore[call-arg]
+settings = Settings()
