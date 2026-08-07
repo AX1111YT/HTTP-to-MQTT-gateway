@@ -77,4 +77,4 @@ class Settings(BaseSettings):
 
 
 # pydantic-settings reads env vars at runtime; mypy can't see the kwargs
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]
