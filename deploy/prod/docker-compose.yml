@@ -31,7 +31,7 @@ services:
     depends_on:
       - caddy
     networks:
-gateway-net:
+      gateway-net:
         aliases:
           - ${MQTT_DOMAIN}
 
