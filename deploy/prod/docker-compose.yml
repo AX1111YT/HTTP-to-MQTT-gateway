@@ -31,7 +31,9 @@ services:
     depends_on:
       - caddy
     networks:
-      - gateway-net
+      gateway-net:
+        aliases:
+          - mqtt.${MQTT_DOMAIN}
 
   api:
     image: ghcr.io/ax1111yt/http-to-mqtt-gateway:${IMAGE_TAG:-latest}

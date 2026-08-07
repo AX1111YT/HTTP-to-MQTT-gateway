@@ -68,7 +68,6 @@ async def require_ownership_or_admin(
 ) -> User:
     if current_user.is_admin or current_user.id == user_uuid:
         return current_user
-    # 404, not 403 — never confirm existence to unauthorized callers
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="User not found",

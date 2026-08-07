@@ -18,14 +18,12 @@ class Settings(BaseSettings):
     BACKUP_ENABLED: bool = False
     GRAFANA_LOGGING_ENABLED: bool = False
 
-    # backup — only required when BACKUP_ENABLED=True
     B2_BUCKET_NAME: str = ""
     B2_APPLICATION_KEY_ID: str = ""
     B2_APPLICATION_KEY: str = ""
     B2_ENDPOINT_URL: str = ""
     BACKUP_ENCRYPTION_KEY: str = ""
 
-    # grafana/loki — only required when GRAFANA_LOGGING_ENABLED=True
     LOKI_PUSH_URL: str = ""
     LOKI_USERNAME: str = ""
     LOKI_PASSWORD: str = ""

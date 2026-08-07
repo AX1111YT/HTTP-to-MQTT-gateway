@@ -5,10 +5,12 @@ Multi-tenant HTTP-to-MQTT gateway for ESPHome devices. Users hit a FastAPI REST 
 ## Prerequisites
 
 (API only)
+
 - Python 3.14
 - [uv](https://docs.astral.sh/uv/) package manager
 
 (Docker Deployment)
+
 - Docker + Compose v2
 
 ## Quick Start (API only)
@@ -69,30 +71,30 @@ On first start:
 
 ## Environment Variables
 
-| Variable                  | Required        | Default                               | Description                                         |
-| ------------------------- | --------------- | ------------------------------------- | --------------------------------------------------- |
-| `ENV`                     | No              | `development`                         | Set to `production` to disable interactive API docs |
-| `DATABASE_URL`            | No              | `sqlite+aiosqlite:///./db/gateway.db` | SQLAlchemy async database URL                       |
-| `BACKUP_ENABLED`          | No              | `False`                               | Enable daily encrypted backups to Backblaze B2      |
-| `GRAFANA_LOGGING_ENABLED` | No              | `False`                               | Ship audit logs to Grafana Loki                     |
-| `MQTT_BROKER_HOST`        | Yes             |                                       | MQTT broker hostname                                |
-| `MQTT_BROKER_PORT`        | No              | `8883`                                | MQTT broker TLS port                                |
-| `MQTT_DOMAIN`             | Yes             |                                       | MQTT broker domain (used for TLS cert paths)        |
-| `MQTT_CA_CERTS`           | No              | `""`                                  | Path to CA certificate for MQTT TLS                 |
-| `MQTT_ADMIN_USERNAME`     | Yes             |                                       | Mosquitto dynamic-security admin username           |
-| `MQTT_ADMIN_PASSWORD`     | Yes             |                                       | Mosquitto dynamic-security admin password           |
-| `MQTT_DISCOVERY_PREFIX`   | No              | `homeassistant`                       | MQTT discovery prefix for entity auto-registration  |
-| `B2_BUCKET_NAME`          | When backup on  |                                       | Backblaze B2 bucket for encrypted backups           |
-| `B2_APPLICATION_KEY_ID`   | When backup on  |                                       | B2 application key ID                               |
-| `B2_APPLICATION_KEY`      | When backup on  |                                       | B2 application key                                  |
-| `B2_ENDPOINT_URL`         | When backup on  |                                       | B2 S3-compatible endpoint URL                       |
-| `BACKUP_ENCRYPTION_KEY`   | When backup on  |                                       | Fernet key for encrypting backup files              |
-| `LOKI_PUSH_URL`           | When logging on |                                       | Grafana Loki push endpoint                          |
-| `LOKI_USERNAME`           | When logging on |                                       | Loki username                                       |
-| `LOKI_PASSWORD`           | When logging on |                                       | Loki password                                       |
-| `RATE_LIMIT_READ`         | No              | `60/minute`                           | Read endpoint rate limit                            |
-| `RATE_LIMIT_WRITE`        | No              | `20/minute`                           | Write endpoint rate limit                           |
-| `LOG_LEVEL`               | No              | `INFO`                                | Python logging level                                |
+| Variable                  | Required        | Default                               | Description                                                                           |
+| ------------------------- | --------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
+| `ENV`                     | No              | `development`                         | Set to `production` to disable interactive API docs                                   |
+| `DATABASE_URL`            | No              | `sqlite+aiosqlite:///./db/gateway.db` | SQLAlchemy async database URL                                                         |
+| `BACKUP_ENABLED`          | No              | `False`                               | Enable daily encrypted backups to Backblaze B2                                        |
+| `GRAFANA_LOGGING_ENABLED` | No              | `False`                               | Ship audit logs to Grafana Loki                                                       |
+| `MQTT_BROKER_HOST`        | Yes             |                                       | MQTT broker hostname - must equal `MQTT_DOMAIN` (it is verified against the TLS cert) |
+| `MQTT_BROKER_PORT`        | No              | `8883`                                | MQTT broker TLS port                                                                  |
+| `MQTT_DOMAIN`             | Yes             |                                       | MQTT broker domain (used for TLS cert paths)                                          |
+| `MQTT_CA_CERTS`           | No              | `""`                                  | Path to CA certificate for MQTT TLS                                                   |
+| `MQTT_ADMIN_USERNAME`     | Yes             |                                       | Mosquitto dynamic-security admin username                                             |
+| `MQTT_ADMIN_PASSWORD`     | Yes             |                                       | Mosquitto dynamic-security admin password                                             |
+| `MQTT_DISCOVERY_PREFIX`   | No              | `homeassistant`                       | MQTT discovery prefix for entity auto-registration                                    |
+| `B2_BUCKET_NAME`          | When backup on  |                                       | Backblaze B2 bucket for encrypted backups                                             |
+| `B2_APPLICATION_KEY_ID`   | When backup on  |                                       | B2 application key ID                                                                 |
+| `B2_APPLICATION_KEY`      | When backup on  |                                       | B2 application key                                                                    |
+| `B2_ENDPOINT_URL`         | When backup on  |                                       | B2 S3-compatible endpoint URL                                                         |
+| `BACKUP_ENCRYPTION_KEY`   | When backup on  |                                       | Fernet key for encrypting backup files                                                |
+| `LOKI_PUSH_URL`           | When logging on |                                       | Grafana Loki push endpoint                                                            |
+| `LOKI_USERNAME`           | When logging on |                                       | Loki username                                                                         |
+| `LOKI_PASSWORD`           | When logging on |                                       | Loki password                                                                         |
+| `RATE_LIMIT_READ`         | No              | `60/minute`                           | Read endpoint rate limit                                                              |
+| `RATE_LIMIT_WRITE`        | No              | `20/minute`                           | Write endpoint rate limit                                                             |
+| `LOG_LEVEL`               | No              | `INFO`                                | Python logging level                                                                  |
 
 ## Registering a Device
 
@@ -136,9 +138,10 @@ mqtt:
   certificate_authority: !secret mqtt_ca_cert
 ```
 
-   `esphome.name` must exactly equal `topic_prefix` (and `name_add_mac_suffix` must be off) — the gateway matches discovery messages against that value, and the MQTT ACL only allows topics under it.
+`esphome.name` must exactly equal `topic_prefix` (and `name_add_mac_suffix` must be off) - the gateway matches discovery messages against that value, and the MQTT ACL only allows topics under it.
 
 4. Paste Let's encrypt root certificate in mqtt_ca_cert
+
 ```
 -----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
@@ -221,7 +224,7 @@ src/gateway/
 ├── schemas/           Pydantic request/response models
 ├── mqtt/              client wrapper, provisioning, ingestor, publisher
 ├── services/          business logic
-├── api/v1/            routers only — thin, delegate to services/
+├── api/v1/            routers only - thin, delegate to services/
 └── audit/             JSONL writer + Loki shipper
 
 scripts/          operational scripts (bootstrap_admin.py, backup_sqlite.py)
