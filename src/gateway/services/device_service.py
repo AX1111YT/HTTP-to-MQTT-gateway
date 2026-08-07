@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import secrets
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -41,17 +42,18 @@ async def create_device(
                 f"(limit is {settings.MAX_DEVICES_PER_USER})"
             )
 
+    short_id = secrets.token_hex(10)
+
     device = Device(
         user_id=user_id,
         name=name,
-        topic_prefix="",
+        topic_prefix=short_id,
         mqtt_username="",
     )
     session.add(device)
     await session.flush()
 
-    mqtt_username, mqtt_password = await create_device_account(mqtt_client, device.id)
-    device.topic_prefix = device.id
+    mqtt_username, mqtt_password = await create_device_account(mqtt_client, short_id)
     device.mqtt_username = mqtt_username
 
     await session.commit()

@@ -116,20 +116,27 @@ On first start:
      -d '{"name": "Living Room Sensor"}'
    ```
 
-   Response includes the device's MQTT username and password (shown once) and the `topic_prefix` (which equals the device UUID).
+   Response includes the device's MQTT username and password (shown once) and the `topic_prefix` - a short random MQTT topic scope, distinct from the device UUID, used as the root of the device's topics on the broker.
 
-3. Configure the ESPHome device's MQTT section:
+3. Configure the ESPHome device:
 
 ```yaml
+esphome:
+  name: <topic_prefix from step 2>
+  name_add_mac_suffix: false
+
 mqtt:
   broker: mqtt.yourdomain.com
   port: 8883
   username: <mqtt_username from step 2>
   password: <mqtt_password from step 2>
+  topic_prefix: <topic_prefix from step 2>
   discovery: true
   discovery_prefix: homeassistant
   certificate_authority: !secret mqtt_ca_cert
 ```
+
+   `esphome.name` must exactly equal `topic_prefix` (and `name_add_mac_suffix` must be off) — the gateway matches discovery messages against that value, and the MQTT ACL only allows topics under it.
 
 4. Paste Let's encrypt root certificate in mqtt_ca_cert
 ```
