@@ -10,7 +10,6 @@ if [ -z "$MQTT_DOMAIN" ]; then
     exit 1
 fi
 
-# Make certs readable by mosquitto
 CERT_DIR="/mosquitto/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/$MQTT_DOMAIN"
 
 chmod 755 \
